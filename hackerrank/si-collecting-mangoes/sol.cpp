@@ -59,7 +59,6 @@ int main(){
                     {
                         max = 0;
                     }
-                    printf("Empty\n");
                 }
                 break;
 
