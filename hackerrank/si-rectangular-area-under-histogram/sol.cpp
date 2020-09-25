@@ -2,10 +2,11 @@
 #include<climits>
 #include<vector>
 #include<algorithm>
+#include<stack>
 
 using namespace std;
 
-long long solve(int arr[], int n){
+long long solve1(int arr[], int n){
     // optimized solution
     // Idea - optimally find the 1st smaller element
     // TC - O(N)
@@ -15,14 +16,15 @@ long long solve(int arr[], int n){
 
     stack<int> st;
     long long maxArea = 0;
-    for(int i = 0; i < n; i++){
+    int i;
+    for(i = 0; i < n; i++){
         if(st.empty() || arr[st.top()] <= arr[i]){
             st.push(i++);
         }
         else{
             int currMax = st.top();
             st.pop();
-            int area = arr[currMax]*(st.empty() ? i : (i-1-st.top());
+            int area = arr[currMax]*(st.empty() ? i : (i-1-st.top()));
 
             if(area > maxArea) maxArea = area;
         }
