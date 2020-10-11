@@ -24,7 +24,7 @@ int sqrt(int A){
 }
 int main(){
 
-    int A = 1e9;
+    int A = 24;
     cout<<sqrt(A);
     return 0;
 }
