@@ -12,11 +12,11 @@ private:
     }
 
     int leftchild(int i){
-        return (2*i+1);
+        return (2*i)+1;
     }
 
     int rightchild(int i){
-        return (2*i+2);
+        return (2*i)+2;
     }
 
     void heapifyDown(int i){
@@ -29,7 +29,7 @@ private:
         
         // compare v[i] with left and right child and find smallest value
         if(left < size() && v[left] < v[i]) smallest = left;
-        if(right < size() && v[right] < v[i]) smallest = right;
+        if(right < size() && v[right] < v[smallest]) smallest = right;
 
         if(smallest != i){
             swap(v[i], v[smallest]);
@@ -55,6 +55,7 @@ public:
     }
 
     int getMin(){
+        if(v.size() == 0) return INT_MIN;
         return v[0];
     }
 
@@ -65,17 +66,37 @@ public:
     }
 
     void deleteMin(){
+        if(v.size() == 0) return;
+        v[0] = v.back();
         v.pop_back();
         heapifyDown(0);
     }
 };
 
 int main(){
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
     int t;
     cin>>t;
+    MinHeap minheap;
     while (t--)
     {
-        /* code */
+        string s;
+        int n;
+        cin>>s;
+        if(s == "insert"){
+            cin>>n;
+            minheap.insert(n);
+        }
+        else if(s == "getMin"){
+            int val = minheap.getMin();
+            if(val == INT_MIN) cout<<"Empty\n";
+            else cout<<minheap.getMin()<<"\n";
+        }
+        else if(s == "delMin"){
+            minheap.deleteMin();
+        }
     }
     
     return 0;
