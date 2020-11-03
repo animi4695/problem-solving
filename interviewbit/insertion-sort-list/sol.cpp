@@ -11,7 +11,7 @@ struct ListNode{
     }
 };
 
-ListNode* InsertionSort(ListNode* &head, ListNode* newNode){
+void InsertionSort(ListNode* &head, ListNode* newNode){
     ListNode* curr;
     if(head == NULL || head->val >= newNode->val){
         newNode->next = head;
