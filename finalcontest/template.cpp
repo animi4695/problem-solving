@@ -1,13 +1,16 @@
 #include<iostream>
 #include<climits>
-#include<cmath>
+#include<vector>
+#include<algorithm>
 
 using namespace std;
 int main(){
     int t;
     cin>>t;
-    while(t--){
-        
+    while (t--)
+    {
+        /* code */
     }
+    
     return 0;
 }
