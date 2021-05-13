@@ -9,12 +9,12 @@ using namespace std;
 
 bool solve(long long n, long long x, long long k){
     long long i = 0;
-    while(i < n){
+    while(i <= n+1){
         if(i == x)
             return true;
         i = i+k;
     }
-    i = n-1;
+    i = n+1;
     while(i >= 0){
         if(i == x) return true;
         i = i-k;
@@ -23,7 +23,7 @@ bool solve(long long n, long long x, long long k){
 }
 
 bool solve2(long long n, long long x, long long k) {
-    if(x%k == 0)
+    if(x%k == 0 || (n+1 - x)%k == 0)
         return true;
     return false;
 }
@@ -37,8 +37,7 @@ int main(){
     while(t--){
         long long n,x,k;
         cin>>n>>x>>k;
-        n = n+2;
-        if(solve(n,x,k))
+        if(solve2(n,x,k))
             cout<<"YES\n";
         else
             cout<<"NO\n";
