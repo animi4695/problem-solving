@@ -27,8 +27,6 @@ int : the number of days having maximum user traffic
 
 Example 1 :
 
-
-
 Input: login = [1, 2, 3], logout = [10, 8, 4]
 Output: 2
 Explanation: The max user traffic is 3, which occurs on 2 days: day 3 and day 4. The answer is 2.
