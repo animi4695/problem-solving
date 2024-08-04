@@ -9,6 +9,10 @@ The string of incorrect data is made up of the characters '0' , '1' and ! where 
 
 Determine the minimum total errors generated? Since the answer can be very large, return it modulo 10 9 +7.
 
+Note: A subsequence of a string is obtained by omitting zero or more characters from the original string without changing their order.
+
+Hint: It can be proved that (a + b) % c = ((a% c) + (b % c)) % c where a, b, and c are integers and % represents the modulo operation.
+
 
 Function Description
 
@@ -30,6 +34,73 @@ Example 1 :
 Input: errorString = "101!1", x = 2, y = 3
 Output: 9
 Explanation:
+
 Given string errorString = "101!1", x = 2, y = 3,
 If the '!' at index 3 is replaced with '0', the string is "10101". The number of times the subsequence 01 occurs is 3 at indices (1, 2), (1, 4), and (3, 4). The number of times the subsequence 10 occurs is also 3, indices (0, 1), (0, 3) and (2, 3). The number of errors is 3 * x + 3 * y = 6 + 9 = 15.
 If the '!' is replaced with '1', the string is "10111". The subsequence 01 occurs 3 times and10 occurs 1 time. The number of errors is 3 * x + y = 9.
+ans = min(15, 9) = 9
+
+Example 2 :
+Input:  errorString = "01!0", x = 2, y = 2
+Output: 6 
+Explanation:
+
+The better string is 0100 with one substring 01 at index (0,1) and two subsequence of 10 at indices (1,2) and (2,3) making total errors generate = 2 * 1 + 2 * 2 = 6.
+
+Example 3 :
+Input:  errorString = "!!!!!!!", x = 23, y = 27
+Output: 0 
+Explanation:
+
+There is a tie for the best string generated, 00000 or 11111, with zero substrings 01 or 10.
+
+
+references - https://www.fastprep.io/problems/amazon-get-min-errors
+
+def getMinErrors(errorString, x, y) -> int:
+    # 10101
+    # [1 1 2 2 3] 1s
+    # [0 1 1 2 2] 0s
+    # 1,0 ->  0+0+1+0+2 = 3 * 3 = 9
+    # 0,1 -> 0+1+0+2+0 = 3 * 2 = 6
+    # 10111
+    # [1 1 2 3 4] 1s
+    # [0 1 1 1 1] 0s
+    # 1 0 -> 0+0+1+1+1 = 3 * 2 = 6
+    # 0 1 -> 0+1+0+0+0 = 1 * 3 = 3
+    oneS = errorString.replace("!", "1")
+    zeroS = errorString.replace("!", "0")
+    
+    def computeError(s, x, y):
+        ones = [0 for _ in range(len(s))]
+        zeroes = [0 for _ in range(len(s))]
+        zeroOnes = 0
+        oneZeroes = 0
+        
+        i = 0
+        for elem in s:
+            if i > 0:
+                if elem == "1": 
+                    ones[i] += 1
+                else:
+                    zeroes[i] += 1
+                ones[i] += ones[i-1]
+                zeroes[i] += zeroes[i-1]
+            else:
+                if elem == "1": 
+                    ones[i] += 1
+                else:
+                    zeroes[i] += 1
+            i += 1
+        i = 0
+        for elem in s:
+            if elem == "1":
+                zeroOnes += zeroes[i]
+            else:
+                oneZeroes += ones[i]
+
+            i += 1
+        return (zeroOnes * x) + (oneZeroes * y)
+
+
+    return min(computeError(oneS, x, y), computeError(zeroS, x, y))
